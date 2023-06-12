@@ -3,12 +3,12 @@ package models;
 import java.util.Objects;
 
 public class MonthlyReportRecord {
-    private String itemName;
-    private  boolean isExpense;
-    private int quantity;
-    private int sumOfOne;
+    private final String itemName;
+    private final boolean isExpense;
+    private final int quantity;
+    private final int sumOfOne;
 
-    public MonthlyReportRecord(String itemName, boolean isExpense, int quantity, int sumOfone){
+    public MonthlyReportRecord(String itemName, boolean isExpense, int quantity, int sumOfone) {
         this.itemName = itemName;
         this.isExpense = isExpense;
         this.quantity = quantity;

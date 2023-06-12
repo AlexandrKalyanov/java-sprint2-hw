@@ -1,17 +1,18 @@
 package models;
-
-import java.util.List;
-
 public class YearlyReportRecord {
-    private int month;
+    private final int month;
 
-    private int amount;
-    private boolean isExpense;
+    private final int amount;
+    private final boolean isExpense;
+    private final int year;
 
-    public YearlyReportRecord(int month, int amount, boolean isExpense) {
+
+    public YearlyReportRecord(int month, int amount, boolean isExpense, int year) {
         this.month = month;
         this.amount = amount;
         this.isExpense = isExpense;
+        this.year = year;
+
     }
 
     @Override
@@ -26,25 +27,14 @@ public class YearlyReportRecord {
     public int getMonth() {
         return month;
     }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
     public int getAmount() {
         return amount;
     }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
     public boolean isExpense() {
         return isExpense;
     }
 
-    public void setExpense(boolean expense) {
-        isExpense = expense;
+    public int getYear() {
+        return year;
     }
-
 }

@@ -7,24 +7,16 @@ import java.util.Map;
 
 public class MonthlyReport {
 
-    private List<MonthlyReportRecord> records;
+    private final List<MonthlyReportRecord> records;
     private final int totalIncome;
     private final int totalExpense;
     private final int month;
-    @Override
-    public String toString() {
-        return "MonthlyReport{" +
-                "records=" + records +
-                '}';
-    }
 
     public MonthlyReport(List<MonthlyReportRecord> records, int month) {
         this.month = month;
         this.records = records;
         this.totalIncome = countExpensesOrIncome(false);
         this.totalExpense = countExpensesOrIncome(true);
-
-
     }
 
     private void findMaxPrice(HashMap<String, Integer> sumExpenses, String text) {
@@ -52,9 +44,10 @@ public class MonthlyReport {
         findMaxPrice(sumProfits, "Самый прибыльный товар: ");
 
     }
-    private int  countExpensesOrIncome(boolean isExpense){
+
+    private int countExpensesOrIncome(boolean isExpense) {
         int sumExpenseOrProfits = 0;
-        for (MonthlyReportRecord a : records){
+        for (MonthlyReportRecord a : records) {
             if (a.isExpense() == isExpense) {
                 int sumOnePosition = a.getQuantity() * a.getSumOfOne();
                 sumExpenseOrProfits += sumOnePosition;
@@ -74,6 +67,13 @@ public class MonthlyReport {
 
     public int getMonth() {
         return month;
+    }
+
+    @Override
+    public String toString() {
+        return "MonthlyReport{" +
+                "records=" + records +
+                '}';
     }
 }
 

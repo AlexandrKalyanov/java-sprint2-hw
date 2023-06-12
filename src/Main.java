@@ -1,15 +1,13 @@
 import models.MonthlyReport;
 import models.YearlyReport;
 import models.YearlyReportRecord;
+
 import java.util.*;
 
 
 public class Main {
-
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
-
         YearlyReport yearlyReport = null;
         List<MonthlyReport> monthlyReports = null;
 
@@ -44,19 +42,20 @@ public class Main {
                         report.informMonthlyReport();
                     }
                 }
-
-
             } else if (command == 5) {
-
+                if (yearlyReport != null) {
+                    yearlyReport.getInfoProfitInYear(monthlyReports, yearlyReport);
+                    System.out.println("Cредний расход за все имеющиеся операции в году: " + yearlyReport.averageExpenseOrProfit(monthlyReports, true));
+                    System.out.println("Cредний доход за все имеющиеся операции в году: " + yearlyReport.averageExpenseOrProfit(monthlyReports, false));
+                } else {
+                    System.out.println("Необходимо сначала считать годовой отчет");
+                }
             } else if (command == 0) {
                 System.out.println("_____________________________________");
                 System.out.println("        Программа завершена          ");
                 break;
             }
-
         }
-
-
     }
 
     private static void printMenu() {
@@ -70,8 +69,10 @@ public class Main {
     }
 
     private static YearlyReport readYearReport() {
-        List<List<String>> rawYearReportRecords = CsvParser.readRawRecords("resources/y.2021.csv");
-        return ReportCreator.createYearlyReport(rawYearReportRecords);
+        String path = "resources/y.2021.csv";
+        List<List<String>> rawYearReportRecords = CsvParser.readRawRecords(path);
+        int year = Integer.parseInt(path.substring(12, 16));
+        return ReportCreator.createYearlyReport(rawYearReportRecords, year);
     }
 
     private static List<MonthlyReport> readMonthReports() {
@@ -99,30 +100,25 @@ public class Main {
             int sumInYear = b.getAmount();
             int expense = monthlyReports.get(monthInYear - 1).getTotalExpense();
             if (monthlyReports.get(monthInYear - 1).getMonth() == monthInYear && !isExpense) {
-
                 if (b.getAmount() == monthlyReports.get(monthInYear - 1).getTotalIncome()) {
-                    printReport(monthInYear,income,sumInYear,"Доход");
+                    printReport(monthInYear, income, sumInYear, "Доход");
                 } else {
                     System.out.println("В отчете по доходам за " + monthInYear + " месяц ОШИБКА");
                     System.out.println(" ");
                 }
             } else {
                 if (b.getAmount() == monthlyReports.get(monthInYear - 1).getTotalExpense()) {
-                    printReport(monthInYear,expense,sumInYear,"Расход");
-
-
+                    printReport(monthInYear, expense, sumInYear, "Расход");
                 } else {
                     System.out.println("В отчете по расходам за " + monthInYear + " месяц ОШИБКА");
                     System.out.println(" ");
                 }
-
             }
-
-
         }
     }
-    private static void printReport(int month, int sumInMonthReport, int sumInYearReport, String incomeOrExpense){
-        System.out.println(incomeOrExpense +" за месяц: " + month);
+
+    private static void printReport(int month, int sumInMonthReport, int sumInYearReport, String incomeOrExpense) {
+        System.out.println(incomeOrExpense + " за месяц: " + month);
         System.out.println(incomeOrExpense + " за месяц: " + sumInMonthReport);
         System.out.println(incomeOrExpense + " за месяц " + "в годовом отчете: " + sumInYearReport);
         System.out.println("Доход за " + month + " месяц соответствует годовому отчету");

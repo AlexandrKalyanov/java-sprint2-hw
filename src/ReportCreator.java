@@ -8,13 +8,13 @@ import java.util.List;
 
 public class ReportCreator {
 
-    public static YearlyReport createYearlyReport(List<List<String>> rawRecords) {
+    public static YearlyReport createYearlyReport(List<List<String>> rawRecords, int year) {
         List<YearlyReportRecord> records = new ArrayList<>();
         for (List<String> rawRecord : rawRecords) {
             int month = Integer.parseInt(rawRecord.get(0));
             int amount = Integer.parseInt(rawRecord.get(1));
             boolean isExpense = Boolean.parseBoolean(rawRecord.get(2));
-            YearlyReportRecord record = new YearlyReportRecord(month, amount, isExpense);
+            YearlyReportRecord record = new YearlyReportRecord(month, amount, isExpense, year);
             records.add(record);
         }
         return new YearlyReport(records);
