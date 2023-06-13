@@ -40,12 +40,11 @@ public class YearlyReport {
     }
 
 
-    public void getInfoProfitInYear(List<MonthlyReport> monthlyReports, YearlyReport yearlyReport) {
+    public void getInfoProfitInYear(List<MonthlyReport> monthlyReports) {
         System.out.println("Год: " + records.get(0).getYear());
         for (MonthlyReport a : monthlyReports) {
             System.out.println(
-                    "Прибыль за " + a.getMonth() + " месяц равна " + profitInMonth(a.getMonth())
-            );
+                    "Прибыль за " + Months.getMonthName(a.getMonth()) + " месяц равна " + profitInMonth(a.getMonth()) + " руб");
         }
 
     }
